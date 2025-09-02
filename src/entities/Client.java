@@ -45,5 +45,14 @@ public class Client {
 
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate=" + birthDate +
+                '}';
+    }
+
     } //essa chave fecha a classe
 

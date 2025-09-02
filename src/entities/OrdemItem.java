@@ -38,4 +38,12 @@ package entities;
             return resultado;
         }
 
+     @Override
+     public String toString() {
+         return "OrdemItem{" +
+                 "quantity=" + quantity +
+                 ", price= $" + price +
+                 '}';
+     }
+
     } // essa chave fecha a classe

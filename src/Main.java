@@ -46,6 +46,21 @@ public class Main {
             Product Product = new Product(name, price);
             OrdemItem OrdemItem = new OrdemItem(quantity, price, Product);
             order.addItem(OrdemItem);
+        }
 
-        }// essa chave fecha a main
+        System.out.println("ORDER SUMMARY:");
+        System.out.println("Order moment: " + order.getMoment());
+        System.out.println("Order status: " + order.getStatus());
+        System.out.println("Client: " + order.getClient());
+        System.out.println("Order items:");
+
+        for (int i = 0; i < order.getItems().size(); i++) {
+            OrdemItem item = order.getItems().get(i);
+            System.out.println(item);
+        }
+
+        System.out.println("Total price: $" + order.total());
+
+
+    }// essa chave fecha a main
     } // essa chave fecha a classe

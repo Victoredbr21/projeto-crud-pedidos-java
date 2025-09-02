@@ -72,5 +72,13 @@ public class Order {
         }
         return soma;
     }
-
+    @Override
+    public String toString() {
+        return "Order{" +
+                "moment=" + moment +
+                ", status=" + status +
+                ", client=" + Client +
+                ", items=" + items +
+                '}';
+    }
 }// marcador
