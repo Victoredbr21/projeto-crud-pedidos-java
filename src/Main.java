@@ -33,7 +33,19 @@ public class Main {
         scan.nextLine();
         Date moment = new Date();
 
-        
+        Order order = new Order(moment, status, Client);
+        for (int i = 0; i < Itens; i++) {
+            System.out.println("Digite dados do item #" + (i + 1));
+            String name = scan.nextLine();
+            System.out.println("Preço do item #" + (i + 1));
+            Double price = scan.nextDouble();
+            scan.nextLine();
+            System.out.println("Quantidade do  item #" + (i + 1));
+            Integer quantity = scan.nextInt();
+            scan.nextLine();
+            Product Product = new Product(name, price);
+            OrdemItem OrdemItem = new OrdemItem(quantity, price, Product);
+            order.addItem(OrdemItem);
 
         }// essa chave fecha a main
     } // essa chave fecha a classe
