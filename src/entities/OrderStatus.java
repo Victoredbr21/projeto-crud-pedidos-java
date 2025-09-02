@@ -5,4 +5,4 @@ public enum OrderStatus {
     PROCESSING,
     SHIPPED,
     DELIVERED
-}
+} //essa chave fecha a classe

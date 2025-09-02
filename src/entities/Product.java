@@ -27,4 +27,4 @@ public class Product {
         this.price = price;
 
     }
-}
+} // essa chave fecha a classe

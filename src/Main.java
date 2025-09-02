@@ -3,5 +3,6 @@
 public class Main {
     public static void main(String[] args) {
 
-        }
-    }
+
+        }// essa chave fecha a main
+    } // essa chave fecha a classe
