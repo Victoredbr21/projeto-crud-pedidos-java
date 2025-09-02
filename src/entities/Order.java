@@ -55,4 +55,22 @@ public class Order {
         this.status = status;
     }
 
+    //metodos
+
+    public void addItem(OrdemItem item) {
+        this.items.add(item);
+        System.out.println("Item" + item + "adicionado");
+    }
+    public void removeItem(OrdemItem item) {
+        this.items.remove(item);
+        System.out.println("Item" + item + " removido");
+    }
+    public Double total() {
+        Double soma = 0.0;
+        for (Integer i = 0; i < items.size(); i++){
+            soma += items.get(i).subTotal();
+        }
+        return soma;
+    }
+    
 }// marcador
