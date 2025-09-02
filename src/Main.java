@@ -23,6 +23,16 @@ public class Main {
             System.out.println("Data inválida!");
         }
 
+        Client Client = new Client(nome, email, dataConvertida);
+
+        System.out.println("Qual o status do produto? ");
+        String statusDigitado = scan.nextLine();
+        OrderStatus status = OrderStatus.valueOf(statusDigitado);
+        System.out.println("Quantos itens terá no pedido ?");
+        Integer Itens = scan.nextInt();
+        scan.nextLine();
+        Date moment = new Date();
+
         
 
         }// essa chave fecha a main
