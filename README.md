@@ -1,98 +1,196 @@
-# Sistema de Gerenciamento de Pedidos em Java
+# 📦 CRUD Pedidos API
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Java](https://img.shields.io/badge/Java-11%2B-blue)
-![Database](https://img.shields.io/badge/Database-JDBC-orange)
-![Build](https://img.shields.io/badge/Build-Maven-red)
+API RESTful para gerenciamento de pedidos, clientes e produtos. Construída com **Spring Boot 3**, **Gradle**, **PostgreSQL** e **Flyway** para migrations.
 
-## 📖 Sobre o Projeto
+> 🔄 **Refatoração completa** do [projeto original](https://github.com/Victoredbr21/projeto-crud-pedidos-java) — de um exercício de console para uma API REST de produção.
 
-Este projeto é uma aplicação de console (CLI - Command-Line Interface) desenvolvida em Java para simular um sistema básico de gerenciamento de pedidos. Foi criado como parte do meu portfólio de estudos para aplicar e demonstrar conhecimentos fundamentais em Java, incluindo Orientação a Objetos, manipulação de coleções, e persistência de dados com JDBC.
+---
 
-A aplicação permite ao usuário realizar operações de **CRUD** (Create, Read, Update, Delete) para as principais entidades de um sistema de vendas: Clientes, Produtos e Pedidos.
+## 🛠️ Tecnologias
 
-## ✨ Funcionalidades
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| Java | 21 | Linguagem |
+| Spring Boot | 3.3.0 | Framework principal |
+| Spring Web | 3.3.0 | API REST |
+| Spring Data JPA | 3.3.0 | Acesso a dados |
+| Spring Validation | 3.3.0 | Validação de DTOs |
+| Flyway | 10.x | Migrations do banco |
+| PostgreSQL | 15+ | Banco de dados |
+| Lombok | latest | Redução de boilerplate |
+| Gradle | 8.x | Build tool |
 
--   **Gerenciamento de Clientes:**
-    -   [✔️] Cadastrar novos clientes.
-    -   [✔️] Listar todos os clientes cadastrados.
-    -   [✔️] Atualizar informações de um cliente existente.
-    -   [✔️] Deletar um cliente.
+---
 
--   **Gerenciamento de Produtos:**
-    -   [✔️] Cadastrar novos produtos no catálogo.
-    -   [✔️] Listar todos os produtos.
-    -   [✔️] Atualizar o preço ou nome de um produto.
-    -   [✔️] Deletar um produto.
+## 📁 Estrutura do Projeto
 
--   **Gerenciamento de Pedidos:**
-    -   [✔️] Criar novos pedidos associados a um cliente.
-    -   [✔️] Adicionar múltiplos produtos e suas quantidades a um pedido.
-    -   [✔️] Exibir um resumo completo do pedido, incluindo os itens e o valor total.
-    -   [✔️] Listar pedidos realizados.
-    -   [✔️] Atualizar o status de um pedido (ex: de `PROCESSANDO` para `ENVIADO`).
+```
+src/main/java/com/pedidos/
+├── CrudPedidosApplication.java     # Entry point
+├── controller/
+│   ├── ClientController.java       # CRUD clientes
+│   ├── ProductController.java      # CRUD produtos
+│   └── OrderController.java        # CRUD pedidos
+├── service/
+│   ├── ClientService.java
+│   ├── ProductService.java
+│   └── OrderService.java
+├── repository/
+│   ├── ClientRepository.java
+│   ├── ProductRepository.java
+│   └── OrderRepository.java
+├── entity/
+│   ├── Client.java
+│   ├── Product.java
+│   ├── Order.java
+│   └── OrderItem.java
+├── dto/
+│   ├── ClientRequestDTO.java / ClientResponseDTO.java
+│   ├── ProductRequestDTO.java / ProductResponseDTO.java
+│   ├── OrderRequestDTO.java / OrderResponseDTO.java
+│   ├── OrderItemRequestDTO.java / OrderItemResponseDTO.java
+│   └── UpdateOrderStatusDTO.java
+├── enums/
+│   └── OrderStatus.java            # WAITING, CANCELED, PAID, SHIPPED, DELIVERED
+└── exception/
+    ├── ResourceNotFoundException.java
+    ├── BusinessException.java
+    └── GlobalExceptionHandler.java
 
-## 🛠️ Tecnologias Utilizadas
+src/main/resources/
+├── application.properties
+├── application-test.properties
+└── db/migration/
+    ├── V1__create_tables.sql       # DDL das tabelas
+    └── V2__seed_data.sql           # Dados iniciais
+```
 
--   **Linguagem:** Java 11+
--   **Persistência de Dados:** JDBC (Java Database Connectivity)
--   **Banco de Dados:** H2 Database (ou qualquer banco de dados relacional com driver JDBC)
--   **Gerenciador de Dependências:** Apache Maven
--   **Interface:** Console (CLI)
+---
 
-## 🏛️ Arquitetura e Padrões de Projeto
-
-A aplicação foi estruturada com foco na **separação de responsabilidades** para garantir um código mais limpo, organizado e de fácil manutenção.
-
--   **Padrão DAO (Data Access Object):** A lógica de acesso ao banco de dados foi isolada em uma camada de DAOs. Para cada entidade principal (`Client`, `Product`, `Order`), existe uma interface DAO definindo as operações de persistência e uma implementação concreta com o código JDBC.
-
--   **Estrutura de Pacotes:**
-    -   `entities`: Contém as classes de modelo (POJOs).
-    -   `dao`: Contém as interfaces DAO.
-    -   `dao.impl`: Contém as implementações JDBC das interfaces DAO.
-    -   `Main.java`: Ponto de entrada da aplicação, responsável pelo menu interativo com o usuário.
-
-## 🚀 Como Executar o Projeto
+## ⚙️ Como executar
 
 ### Pré-requisitos
+- Java 21+
+- PostgreSQL 15+
+- Gradle 8+ (ou use o wrapper `./gradlew`)
 
-Antes de começar, você vai precisar ter instalado em sua máquina:
--   [Java JDK 11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html) ou superior.
--   [Apache Maven](https://maven.apache.org/download.cgi).
--   Um cliente Git.
+### 1. Crie o banco de dados
 
-### Passos
+```sql
+CREATE DATABASE pedidos_db;
+```
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
-    ```
+### 2. Configure as credenciais
 
-2.  **Navegue até a pasta do projeto:**
-    ```bash
-    cd seu-repositorio
-    ```
+Edite `src/main/resources/application.properties`:
 
-3.  **Compile o projeto e baixe as dependências com o Maven:**
-    ```bash
-    mvn clean install
-    ```
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/pedidos_db
+spring.datasource.username=seu_usuario
+spring.datasource.password=sua_senha
+```
 
-4.  **Execute a aplicação:**
-    ```bash
-    java -cp target/classes Main
-    ```
+### 3. Execute
 
-Após a execução, um menu interativo aparecerá no console para que você possa utilizar o sistema.
+```bash
+./gradlew bootRun
+```
 
-## 📈 Roadmap (Próximos Passos)
+O Flyway rodará as migrations automaticamente na primeira inicialização.
 
--   [ ] Implementar uma camada de Serviços para a lógica de negócio.
--   [ ] Adicionar tratamento de exceções mais robusto.
--   [ ] Criar testes unitários com JUnit para os DAOs e Serviços.
--   [ ] Evoluir o projeto para uma API REST utilizando o framework Spring Boot.
--   [ ] Criar uma interface gráfica (GUI) com JavaFX ou Swing.
+A API ficará disponível em: `http://localhost:8080`
 
-## 👨‍💻 Autor
+---
 
-Feito com ❤️ por **[Victor Américo]**
+## 🌐 Endpoints
+
+### Clientes `/api/clients`
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| GET | `/api/clients` | Lista todos os clientes |
+| GET | `/api/clients/{id}` | Busca cliente por ID |
+| POST | `/api/clients` | Cria novo cliente |
+| PUT | `/api/clients/{id}` | Atualiza cliente |
+| DELETE | `/api/clients/{id}` | Remove cliente |
+
+### Produtos `/api/products`
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| GET | `/api/products` | Lista todos os produtos |
+| GET | `/api/products/{id}` | Busca produto por ID |
+| POST | `/api/products` | Cria novo produto |
+| PUT | `/api/products/{id}` | Atualiza produto |
+| DELETE | `/api/products/{id}` | Remove produto |
+
+### Pedidos `/api/orders`
+
+| Método | Endpoint | Descrição |
+|---|---|---|
+| GET | `/api/orders` | Lista todos os pedidos |
+| GET | `/api/orders?clientId={id}` | Pedidos por cliente |
+| GET | `/api/orders?status={status}` | Pedidos por status |
+| GET | `/api/orders/{id}` | Busca pedido por ID |
+| POST | `/api/orders` | Cria novo pedido |
+| PATCH | `/api/orders/{id}/status` | Atualiza status do pedido |
+| DELETE | `/api/orders/{id}` | Remove pedido |
+
+---
+
+## 📋 Exemplos de Requisições
+
+### Criar cliente
+```json
+POST /api/clients
+{
+  "name": "Victor Eduardo",
+  "email": "victor@email.com",
+  "birthDate": "1996-05-14"
+}
+```
+
+### Criar pedido
+```json
+POST /api/orders
+{
+  "clientId": 1,
+  "status": "WAITING",
+  "items": [
+    { "productId": 1, "quantity": 2 },
+    { "productId": 3, "quantity": 1 }
+  ]
+}
+```
+
+### Atualizar status
+```json
+PATCH /api/orders/1/status
+{
+  "status": "PAID"
+}
+```
+
+### Status disponíveis (em ordem)
+```
+WAITING → PAID → SHIPPED → DELIVERED
+         ↓
+      CANCELED
+```
+
+---
+
+## 🧪 Testes
+
+```bash
+./gradlew test
+```
+
+O perfil de testes usa H2 em memória — sem precisar de PostgreSQL rodando.
+
+---
+
+## 🔗 Origem do Projeto
+
+Refatoração completa do projeto `projeto-crud-pedidos-java`, originalmente um exercício do curso do [Nélio Alves](https://devsuperior.com.br) (Java COMPLETO). O exercício original usava leitura de console sem persistência; esta versão o transforma em uma API REST completa.
+
