@@ -36,5 +36,6 @@ logs/
 Thumbs.db
 
 # Environment
-.env
+*.env
 application-prod.properties
+*application.properties
